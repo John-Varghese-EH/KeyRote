@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useEffect, useRef } from 'react';
+import Link from 'next/link';
 
 export type AetherHeroProps = {
   /* ---------- Hero content ---------- */
@@ -325,8 +326,8 @@ export function AetherHero({
               }}
             >
               {ctaLabel ? (
-                <a
-                  href={ctaHref}
+                <Link
+                  href={ctaHref || '#'}
                   className="aurora-btn aurora-btn--primary"
                   style={{
                     padding: '12px 18px',
@@ -342,12 +343,12 @@ export function AetherHero({
                   }}
                 >
                   {ctaLabel}
-                </a>
+                </Link>
               ) : null}
 
               {secondaryCtaLabel ? (
-                <a
-                  href={secondaryCtaHref}
+                <Link
+                  href={secondaryCtaHref || '#'}
                   className="aurora-btn aurora-btn--ghost"
                   style={{
                     padding: '12px 18px',
@@ -362,7 +363,7 @@ export function AetherHero({
                   }}
                 >
                   {secondaryCtaLabel}
-                </a>
+                </Link>
               ) : null}
             </div>
           )}

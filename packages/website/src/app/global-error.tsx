@@ -22,7 +22,6 @@ export default function GlobalError({
         <div className="min-h-screen flex flex-col bg-background text-foreground overflow-hidden relative font-sans">
           <header className="absolute top-0 z-50 w-full p-6 flex justify-between items-center">
             <div className="font-bold tracking-tight">KeyRote</div>
-            <ThemeToggle />
           </header>
 
           <div className="flex-1 flex flex-col items-center justify-center p-6 text-center relative z-10 space-y-6">

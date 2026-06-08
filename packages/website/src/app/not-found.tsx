@@ -9,7 +9,6 @@ export default function NotFound() {
   return (
     <div className="min-h-screen flex flex-col bg-background overflow-hidden relative">
       <header className="absolute top-0 z-50 w-full p-6 flex justify-end">
-        <ThemeToggle />
       </header>
 
       <div className="flex-1 flex flex-col items-center justify-center p-6 text-center relative z-10">
@@ -43,7 +42,7 @@ export default function NotFound() {
               Return Home
             </Link>
 
-            <form action="/search" method="get" className="flex items-center w-full max-w-sm mt-4 border border-border rounded-xl overflow-hidden bg-background/50 backdrop-blur">
+            <form action="https://github.com/John-Varghese-EH/KeyRote/search" method="get" className="flex items-center w-full max-w-sm mt-4 border border-border rounded-xl overflow-hidden bg-background/50 backdrop-blur">
               <input 
                 type="search" 
                 name="q" 
