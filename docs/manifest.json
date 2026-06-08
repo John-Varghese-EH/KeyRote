@@ -2,18 +2,18 @@
   "name": "KeyRote - API Key Rotation & Load Balancer",
   "short_name": "KeyRote",
   "description": "Enterprise-grade API Key Rotation & Load Balancer Proxy.",
-  "start_url": "/",
+  "start_url": "/KeyRote/",
   "display": "standalone",
   "background_color": "#000000",
   "theme_color": "#000000",
   "orientation": "portrait-primary",
-  "scope": "/",
+  "scope": "/KeyRote/",
   "lang": "en",
   "dir": "ltr",
   "categories": ["developer", "tools", "ai"],
   "icons": [
     {
-      "src": "/apple-icon.png",
+      "src": "/KeyRote/apple-icon.png",
       "sizes": "180x180",
       "type": "image/png",
       "purpose": "maskable any"
