@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { Star } from "lucide-react";
 
@@ -9,6 +10,9 @@ export function Header() {
   const [stars, setStars] = useState<number | null>(null);
   const [isVisible, setIsVisible] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
+  const pathname = usePathname();
+
+  const isHomePage = pathname === "/";
 
   useEffect(() => {
     fetch("https://api.github.com/repos/John-Varghese-EH/KeyRote")
@@ -39,7 +43,7 @@ export function Header() {
 
   return (
     <header 
-      className={`fixed top-0 left-0 right-0 z-50 px-4 md:px-6 py-3 md:py-4 flex items-center justify-between pointer-events-none transition-transform duration-300 ${isVisible ? 'translate-y-0' : '-translate-y-full'}`}
+      className={`fixed top-0 left-0 right-0 z-50 px-4 md:px-6 py-3 md:py-4 flex items-center justify-between pointer-events-none transition-transform duration-300 ${isHomePage || isVisible ? 'translate-y-0' : '-translate-y-full'}`}
     >
       <div className="flex items-center gap-2 pointer-events-auto bg-black/20 dark:bg-black/40 backdrop-blur-md px-3 md:px-4 py-1.5 md:py-2 rounded-full border border-black/10 dark:border-white/10 shadow-lg">
         <Link href="/" className="font-bold text-base md:text-lg tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-zinc-900 to-zinc-600 dark:from-white dark:to-zinc-400">

@@ -1,0 +1,10 @@
+/* TEAM */
+Author: John Varghese (J0X)
+Site: https://github.com/John-Varghese-EH
+Twitter: @John_Varghese_
+
+/* SITE */
+Last update: 2026/06/08
+Language: English
+Doctype: HTML5
+IDE: Zen, VSCode

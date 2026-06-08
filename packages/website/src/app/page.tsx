@@ -2,10 +2,33 @@
 
 import { AetherHero } from "@/components/ui/aether-hero";
 import { useTheme } from "next-themes";
-import { ShieldAlert, ServerCog, Blocks, Activity, CheckCircle2, Zap, Lock, Globe } from "lucide-react";
+import { ShieldAlert, ServerCog, Blocks, Activity, CheckCircle2, Zap, Lock, Globe, BadgeDollarSign, ShieldCheck, Timer, RefreshCcw, XCircle, AlertCircle, MessageCircleQuestion, Plus } from "lucide-react";
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
+
+const faqs = [
+  {
+    q: "What exactly does KeyRote do?",
+    a: "KeyRote is a transparent, decentralized API proxy. It intercepts requests going to AI providers (like OpenAI), automatically injects the least-used healthy API key from your pool, and dynamically rotates keys if a 429 rate limit is hit—ensuring zero downtime."
+  },
+  {
+    q: "Are my API keys and prompts secure?",
+    a: "Absolutely. KeyRote is 100% self-hosted and open-source. Your API keys and sensitive prompt data never leave your environment. There is zero telemetry, zero logging by default, and no 3rd-party SaaS passing."
+  },
+  {
+    q: "How does KeyRote handle 429 Too Many Requests errors?",
+    a: "When KeyRote receives a 429 error from an AI provider, it intercepts the failure before it reaches your application. It immediately marks that specific key as 'exhausted', pulls a fresh key, and seamlessly retries the request using exponential backoff and jitter."
+  },
+  {
+    q: "Can I deploy this on Edge infrastructure?",
+    a: "Yes! KeyRote is built on modern, lightweight runtimes (like Fastify) and is fully compatible with Edge environments including Cloudflare Workers. This ensures decision routing happens in under ~2ms."
+  },
+  {
+    q: "Which LLM providers are supported?",
+    a: "KeyRote acts as a universal passthrough. It natively supports OpenAI, Anthropic, Google Gemini, Groq, NVIDIA NIM, and OpenRouter. You do not need to change your SDK—just point your base URL to your KeyRote instance."
+  }
+];
 
 export default function Home() {
   const { resolvedTheme } = useTheme();
@@ -16,6 +39,7 @@ export default function Home() {
   }, []);
 
   const isDark = mounted ? resolvedTheme === "dark" : true;
+  const currentYear = new Date().getFullYear();
 
   return (
     <div className="flex min-h-screen flex-col overflow-x-hidden">
@@ -37,8 +61,13 @@ export default function Home() {
         }
       />
 
-      <main id="features" className="flex-1 w-full relative z-10 py-32 px-6 md:px-12 bg-background">
-        <div className="max-w-6xl mx-auto space-y-40">
+      <main id="features" className="flex-1 w-full relative z-10 py-16 md:py-24 px-4 sm:px-6 md:px-12 bg-background overflow-hidden">
+        {/* Ambient Background Glows */}
+        <div className="absolute top-0 left-0 w-[80vw] h-[800px] bg-primary/5 blur-[150px] pointer-events-none z-[-1]" />
+        <div className="absolute top-[30%] right-0 w-[500px] h-[500px] bg-emerald-500/5 blur-[150px] pointer-events-none z-[-1]" />
+        <div className="absolute bottom-[20%] left-0 w-[600px] h-[600px] bg-purple-500/5 blur-[150px] pointer-events-none z-[-1]" />
+        
+        <div className="max-w-6xl mx-auto space-y-24 md:space-y-32 relative z-10">
 
           {/* Supported Providers Marquee */}
           <motion.div
@@ -97,7 +126,7 @@ export default function Home() {
             className="space-y-16"
           >
             <div className="text-center space-y-6">
-              <h2 className="text-4xl md:text-6xl font-bold tracking-tighter">Built for Production Scale.</h2>
+              <h2 className="text-4xl md:text-6xl font-bold tracking-tighter bg-clip-text text-transparent bg-gradient-to-r from-foreground to-foreground/60">Built for Production Scale.</h2>
               <p className="text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
                 KeyRote sits completely transparently between your application and your AI providers.
                 When an API key burns out, we seamlessly hot-swap it mid-flight.
@@ -138,11 +167,13 @@ export default function Home() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 1 }}
-            className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center"
+            className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center"
           >
             <div className="space-y-12">
-              <h2 className="text-4xl md:text-5xl font-bold tracking-tighter">How It Works.</h2>
-              <div className="space-y-8">
+              <h2 className="text-4xl md:text-5xl font-bold tracking-tighter bg-clip-text text-transparent bg-gradient-to-r from-foreground to-foreground/60">How It Works.</h2>
+              <div className="space-y-8 relative">
+                {/* Vertical Timeline Line */}
+                <div className="absolute left-[23px] top-8 bottom-8 w-[2px] bg-gradient-to-b from-primary/50 via-emerald-500/50 to-transparent z-0 hidden sm:block"></div>
                 <Step number="1" title="Intercept Request" description="Your client sends a standard LLM payload to KeyRote instead of the direct provider API." />
                 <Step number="2" title="Inject Healthy Key" description="KeyRote pulls the least-used healthy API key from Redis and injects it into the Authorization header." />
                 <Step number="3" title="Transparent Proxy" description="The request is forwarded exactly as-is. If a 429 occurs, KeyRote intercepts it, marks the key exhausted, and retries automatically." />
@@ -164,13 +195,13 @@ export default function Home() {
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 1, type: "spring", bounce: 0.2 }}
-            className="bg-zinc-950 dark:bg-zinc-900 text-white rounded-[2.5rem] p-8 md:p-20 space-y-16 shadow-2xl relative overflow-hidden"
+            className="bg-zinc-950 dark:bg-zinc-900 text-white rounded-[2.5rem] p-6 md:p-16 space-y-10 md:space-y-16 shadow-2xl relative overflow-hidden"
           >
             <div className="absolute top-0 right-0 w-96 h-96 bg-blue-500/10 blur-[100px] rounded-full pointer-events-none"></div>
             <div className="absolute bottom-0 left-0 w-96 h-96 bg-purple-500/10 blur-[100px] rounded-full pointer-events-none"></div>
 
             <div className="text-center space-y-4 md:space-y-6 relative z-10">
-              <h2 className="text-3xl md:text-6xl font-bold tracking-tighter">Uncompromising Performance.</h2>
+              <h2 className="text-3xl md:text-5xl lg:text-6xl font-bold tracking-tighter">Uncompromising Performance.</h2>
               <p className="text-lg md:text-xl opacity-70 max-w-2xl mx-auto leading-relaxed">
                 Built on Fastify and Cloudflare Workers, KeyRote adds virtually zero overhead to your LLM pipeline.
               </p>
@@ -208,14 +239,24 @@ export default function Home() {
                 Unlock enterprise resilience without the enterprise price tag.
               </p>
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              <div className="p-8 rounded-[2rem] bg-gradient-to-br from-card to-muted border border-border">
-                <h3 className="text-2xl font-bold mb-4">Cost Efficiency</h3>
-                <p className="text-muted-foreground leading-relaxed">Stop paying for expensive managed gateways that charge per request. KeyRote is open-source and can be hosted on a $5 VPS or for free on Cloudflare Workers, handling millions of requests at no extra cost.</p>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 relative z-10">
+              <div className="p-8 md:p-10 rounded-[2rem] bg-card/40 backdrop-blur-xl border border-white/5 shadow-[0_8px_30px_rgb(0,0,0,0.12)] group hover:-translate-y-2 transition-all duration-500 relative overflow-hidden">
+                <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
+                <div className="absolute top-0 right-0 p-8 opacity-10 group-hover:opacity-20 transition-opacity duration-500 pointer-events-none"><BadgeDollarSign className="w-24 h-24" /></div>
+                <div className="mb-6 p-4 rounded-2xl bg-emerald-500/10 w-fit text-emerald-500 group-hover:scale-110 transition-transform duration-500">
+                  <BadgeDollarSign className="w-8 h-8" />
+                </div>
+                <h3 className="text-2xl font-bold mb-4 relative z-10">Cost Efficiency</h3>
+                <p className="text-muted-foreground leading-relaxed relative z-10">Stop paying for expensive managed gateways that charge per request. KeyRote is open-source and can be hosted on a $5 VPS or for free on Cloudflare Workers, handling millions of requests at no extra cost.</p>
               </div>
-              <div className="p-8 rounded-[2rem] bg-gradient-to-bl from-card to-muted border border-border">
-                <h3 className="text-2xl font-bold mb-4">Maximum Privacy</h3>
-                <p className="text-muted-foreground leading-relaxed">Unlike SaaS gateways, KeyRote runs in your own infrastructure. Your API keys and sensitive prompt data never leave your environment, ensuring strict compliance with HIPAA and GDPR requirements.</p>
+              <div className="p-8 md:p-10 rounded-[2rem] bg-card/40 backdrop-blur-xl border border-white/5 shadow-[0_8px_30px_rgb(0,0,0,0.12)] group hover:-translate-y-2 transition-all duration-500 relative overflow-hidden">
+                <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
+                <div className="absolute top-0 right-0 p-8 opacity-10 group-hover:opacity-20 transition-opacity duration-500 pointer-events-none"><ShieldCheck className="w-24 h-24" /></div>
+                <div className="mb-6 p-4 rounded-2xl bg-blue-500/10 w-fit text-blue-500 group-hover:scale-110 transition-transform duration-500">
+                  <ShieldCheck className="w-8 h-8" />
+                </div>
+                <h3 className="text-2xl font-bold mb-4 relative z-10">Maximum Privacy</h3>
+                <p className="text-muted-foreground leading-relaxed relative z-10">Unlike SaaS gateways, KeyRote runs in your own infrastructure. Your API keys and sensitive prompt data never leave your environment, ensuring strict compliance with HIPAA and GDPR requirements.</p>
               </div>
             </div>
           </motion.div>
@@ -228,8 +269,8 @@ export default function Home() {
             transition={{ duration: 1 }}
             className="relative rounded-[2.5rem] overflow-hidden border border-border shadow-sm bg-card"
           >
-            <div className="relative p-6 md:p-16 lg:p-20 flex flex-col lg:flex-row items-center gap-10 md:gap-16">
-              <div className="flex-1 space-y-6 md:space-y-8">
+            <div className="relative p-6 md:p-12 lg:p-16 flex flex-col lg:flex-row items-center gap-10 md:gap-16">
+              <div className="flex-1 space-y-6 md:space-y-8 w-full">
                 <h3 className="text-3xl md:text-4xl font-bold tracking-tighter">1-Click Integration.</h3>
                 <p className="text-lg md:text-xl text-muted-foreground leading-relaxed">
                   Replace your provider's base URL with your KeyRote instance. No SDK changes required.
@@ -251,6 +292,89 @@ export default function Home() {
               </div>
             </div>
           </motion.div>
+
+          {/* Expertise & Reinsurance: Load Balancer Mechanics */}
+            <motion.div
+              initial={{ opacity: 0, y: 40 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-100px" }}
+              transition={{ duration: 1 }}
+              className="space-y-8 md:space-y-12 pb-10 mt-20 md:mt-32"
+            >
+              <div className="text-center space-y-4">
+                <h2 className="text-4xl md:text-5xl font-bold tracking-tighter bg-clip-text text-transparent bg-gradient-to-r from-foreground to-foreground/60">Enterprise Load Balancing.</h2>
+                <p className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
+                  How KeyRote allows you to respond effectively to issues related to Load Balancers and AI API orchestration.
+                </p>
+              </div>
+              <div className="bg-card rounded-[2.5rem] p-8 md:p-12 border border-border shadow-sm max-w-5xl mx-auto">
+                <p className="text-lg leading-relaxed text-foreground">
+                  When scaling generative AI applications, the primary bottleneck is vendor rate limits (429 Too Many Requests). Relying on a single API key restricts throughput.
+                  <strong className="text-primary mx-1">KeyRote's decentralized load balancing architecture</strong> intercepts egress requests, evaluates the real-time quota status of your registered keys in a Redis or in-memory pool, and dynamically routes the request to the healthiest key.
+                </p>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-10">
+                  <div className="flex items-start gap-4 bg-background/50 backdrop-blur-sm p-6 rounded-2xl border border-white/5 shadow-lg group hover:bg-background/80 transition-colors">
+                    <div className="mt-1 relative flex items-center justify-center">
+                      <div className="absolute inset-0 bg-blue-500/20 rounded-full animate-ping"></div>
+                      <div className="relative bg-blue-500/20 text-blue-500 p-2 rounded-xl"><Timer className="w-5 h-5" /></div>
+                    </div>
+                    <div>
+                      <h4 className="text-lg font-bold text-foreground mb-1">Zero-Latency Routing</h4>
+                      <p className="text-sm text-muted-foreground leading-relaxed">Decision making occurs in under ~2ms using Edge-optimized runtimes.</p>
+                    </div>
+                  </div>
+                  <div className="flex items-start gap-4 bg-background/50 backdrop-blur-sm p-6 rounded-2xl border border-white/5 shadow-lg group hover:bg-background/80 transition-colors">
+                    <div className="mt-1 relative flex items-center justify-center">
+                      <div className="absolute inset-0 bg-emerald-500/20 rounded-full animate-ping" style={{ animationDelay: '0.5s' }}></div>
+                      <div className="relative bg-emerald-500/20 text-emerald-500 p-2 rounded-xl"><RefreshCcw className="w-5 h-5" /></div>
+                    </div>
+                    <div>
+                      <h4 className="text-lg font-bold text-foreground mb-1">Backoff Strategies</h4>
+                      <p className="text-sm text-muted-foreground leading-relaxed">Automatic exponential backoff and jitter for transient 500/502 errors from OpenAI/Anthropic.</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+
+            {/* Comparison Matrix Removed */}
+
+            {/* FAQ Section */}
+            <motion.div
+              initial={{ opacity: 0, y: 40 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-100px" }}
+              transition={{ duration: 1 }}
+              className="space-y-8 md:space-y-12 pb-10 mt-16 md:mt-24"
+            >
+              <div className="text-center space-y-4">
+                <h2 className="text-4xl md:text-5xl font-bold tracking-tighter bg-clip-text text-transparent bg-gradient-to-r from-foreground to-foreground/60">Frequently Asked Questions</h2>
+              </div>
+              <div className="max-w-3xl mx-auto space-y-4">
+                {faqs.map((faq, index) => (
+                  <FAQItem key={index} question={faq.q} answer={faq.a} />
+                ))}
+              </div>
+            </motion.div>
+
+            {/* FAQ Schema */}
+            <script
+              type="application/ld+json"
+              dangerouslySetInnerHTML={{
+                __html: JSON.stringify({
+                  "@context": "https://schema.org",
+                  "@type": "FAQPage",
+                  "mainEntity": faqs.map(faq => ({
+                    "@type": "Question",
+                    "name": faq.q,
+                    "acceptedAnswer": {
+                      "@type": "Answer",
+                      "text": faq.a
+                    }
+                  }))
+                })
+              }}
+            ></script>
         </div>
       </main>
 
@@ -261,26 +385,60 @@ export default function Home() {
 
 function FeatureCard({ icon, title, description, colorClass = "group-hover:bg-muted" }: { icon: React.ReactNode, title: string, description: string, colorClass?: string }) {
   return (
-    <div className="p-8 rounded-[2rem] bg-card/50 backdrop-blur-sm border border-border hover:border-black/20 dark:hover:border-white/20 transition-all hover:shadow-2xl group hover:-translate-y-3 duration-500">
-      <div className={`mb-6 p-4 rounded-2xl bg-muted/50 w-fit transition-all duration-500 group-hover:-translate-y-2 group-hover:scale-110 ${colorClass}`}>
+    <div className="p-8 rounded-[2rem] bg-card/40 backdrop-blur-md border border-border/50 hover:border-black/20 dark:hover:border-white/20 transition-all hover:shadow-[0_8px_30px_rgb(0,0,0,0.12)] group hover:-translate-y-3 duration-500 relative overflow-hidden">
+      <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
+      <div className={`mb-6 p-4 rounded-2xl bg-muted/50 w-fit transition-all duration-500 group-hover:-translate-y-2 group-hover:scale-110 relative z-10 ${colorClass}`}>
         {icon}
       </div>
-      <h3 className="text-xl font-bold mb-3 tracking-tight">{title}</h3>
-      <p className="text-muted-foreground leading-relaxed text-sm">{description}</p>
+      <h3 className="text-xl font-bold mb-3 tracking-tight relative z-10">{title}</h3>
+      <p className="text-muted-foreground leading-relaxed text-sm relative z-10">{description}</p>
     </div>
   );
 }
 
 function Step({ number, title, description }: { number: string, title: string, description: string }) {
   return (
-    <div className="flex gap-6 items-start">
-      <div className="flex-shrink-0 w-12 h-12 rounded-full bg-foreground text-background flex items-center justify-center font-bold text-lg">
-        {number}
+    <div className="flex gap-6 items-start relative z-10">
+      <div className="flex-shrink-0 w-12 h-12 rounded-full bg-background border border-primary/20 shadow-[0_0_15px_rgba(0,0,0,0.05)] flex items-center justify-center font-bold text-lg relative overflow-hidden group">
+        <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-emerald-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+        <span className="relative z-10 text-foreground group-hover:scale-110 transition-transform duration-300">{number}</span>
       </div>
       <div>
         <h4 className="text-2xl font-bold mb-2 tracking-tight">{title}</h4>
         <p className="text-muted-foreground leading-relaxed">{description}</p>
       </div>
+    </div>
+  );
+}
+
+function FAQItem({ question, answer }: { question: string, answer: string }) {
+  const [isOpen, setIsOpen] = useState(false);
+
+  return (
+    <div className={`bg-card/40 backdrop-blur-md rounded-[1.5rem] border transition-all duration-300 overflow-hidden group ${isOpen ? 'border-primary/50 shadow-lg shadow-primary/20' : 'border-white/5 hover:border-white/10 shadow-sm hover:shadow-md'}`}>
+      <button
+        onClick={() => setIsOpen(!isOpen)}
+        className="w-full p-6 md:p-8 flex items-center justify-between gap-4 text-left focus:outline-none"
+      >
+        <h3 className="text-lg md:text-xl font-bold text-foreground relative z-10 pr-8">{question}</h3>
+        <div className={`flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center transition-colors duration-300 ${isOpen ? 'bg-primary text-primary-foreground' : 'bg-primary/10 text-primary group-hover:bg-primary/20'}`}>
+          <Plus className={`w-5 h-5 transition-transform duration-500 ${isOpen ? 'rotate-45' : ''}`} />
+        </div>
+      </button>
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: "auto", opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.3, ease: "easeInOut" }}
+          >
+            <div className="p-6 md:p-8 pt-0">
+              <p className="text-muted-foreground leading-relaxed relative z-10">{answer}</p>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }
