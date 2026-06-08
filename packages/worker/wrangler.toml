@@ -1,0 +1,20 @@
+name = "keyrote-proxy"
+main = "src/index.ts"
+compatibility_date = "2024-04-05"
+
+# We will read secrets from the environment in production.
+# For local dev, you can use .dev.vars
+# UPSTREAM_API_KEYS
+# PROXY_SECRET
+# UPSTASH_REDIS_REST_URL
+# UPSTASH_REDIS_REST_TOKEN
+
+[vars]
+KEY_HEADER_NAME = "Authorization"
+ROTATION_STRATEGY = "round-robin"
+COOLDOWN_MS = "60000"
+MAX_RETRY_ATTEMPTS = "3"
+BASE_DELAY_MS = "500"
+MAX_DELAY_MS = "8000"
+MAX_REDIS_AUDIT_ENTRIES = "10000"
+MAX_REDIS_ERROR_ENTRIES = "2000"

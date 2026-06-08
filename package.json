@@ -1,0 +1,28 @@
+{
+  "name": "keyrote-monorepo",
+  "private": true,
+  "author": "John Varghese (J0X) <https://github.com/John-Varghese-EH>",
+  "scripts": {
+    "setup": "node scripts/setup.js",
+    "dev:proxy": "pnpm --filter proxy run dev",
+    "dev:dashboard": "pnpm --filter dashboard run dev",
+    "dev": "concurrently -n \"proxy,dashboard\" -c \"blue,green\" \"pnpm run dev:proxy\" \"pnpm run dev:dashboard\"",
+    "build": "pnpm --filter proxy run build",
+    "start": "pnpm --filter proxy run start",
+    "lint": "eslint . --ext .ts,.tsx",
+    "format": "prettier --write \"**/*.{ts,tsx,json,md}\"",
+    "test": "vitest run"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.0",
+    "@typescript-eslint/eslint-plugin": "^7.0.0",
+    "@typescript-eslint/parser": "^7.0.0",
+    "concurrently": "^10.0.3",
+    "dotenv-cli": "^11.0.0",
+    "eslint": "^8.56.0",
+    "prettier": "^3.2.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.3.3",
+    "vitest": "^1.2.0"
+  }
+}
