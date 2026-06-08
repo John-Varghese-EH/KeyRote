@@ -49,6 +49,6 @@ See [Deployment Document](./docs/deployment.md)
 See the comprehensive `.env.example` file included in the repository.
 
 ---
-**License**: MIT  
+**License**: GNU AGPL v3  
 **Author**: John Varghese (J0X) <https://github.com/John-Varghese-EH>  
 **LinkedIn**: [/in/John--Varghese](https://linkedin.com/in/John--Varghese)
