@@ -24,7 +24,7 @@ export default function TermsOfService() {
         <li>Provide accurate registration information.</li>
       </ul>
 
-      <h2>4. Acceptable Use — You agree NOT to:</h2>
+      <h2>4. Acceptable Use - You agree NOT to:</h2>
       <ul>
         <li>Use for unlawful purposes</li>
         <li>Attempt unauthorized system access</li>

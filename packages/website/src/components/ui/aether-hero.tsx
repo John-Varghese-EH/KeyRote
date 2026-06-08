@@ -35,9 +35,11 @@ out vec4 O;
 uniform float time;
 uniform vec2 resolution;
 uniform float u_light_mode;
+uniform vec2 u_mouse;
 #define FC gl_FragCoord.xy
 #define R resolution
 #define T time
+#define M u_mouse
 #define S smoothstep
 #define MN min(R.x,R.y)
 float pattern(vec2 uv) {
@@ -50,6 +52,9 @@ float pattern(vec2 uv) {
 }
 vec3 scene(vec2 uv) {
   vec3 col=vec3(0);
+  // Only shift horizontally based on mouse position
+  vec2 mouseOffset = (M / R) * 2.0 - 1.0;
+  uv.x += mouseOffset.x * 0.15; 
   uv=vec2(atan(uv.x,uv.y)*2./6.28318,-log(length(uv))+T);
   for (float i=.0; i<3.; i++) {
     int k=int(mod(i,3.));
@@ -108,6 +113,9 @@ export function AetherHero({
   const uniTimeRef = useRef<WebGLUniformLocation | null>(null);
   const uniResRef = useRef<WebGLUniformLocation | null>(null);
   const uniLightModeRef = useRef<WebGLUniformLocation | null>(null);
+  const uniMouseRef = useRef<WebGLUniformLocation | null>(null);
+  const targetMouseRef = useRef<{ x: number; y: number }>({ x: typeof window !== 'undefined' ? window.innerWidth / 2 : 100, y: typeof window !== 'undefined' ? window.innerHeight / 2 : 5100 });
+  const mouseRef = useRef<{ x: number; y: number }>({ x: typeof window !== 'undefined' ? window.innerWidth / 2 : 500, y: typeof window !== 'undefined' ? window.innerHeight / 2 : 500 });
   const rafRef = useRef<number | null>(null);
 
   // Compile helpers
@@ -172,6 +180,16 @@ export function AetherHero({
     uniTimeRef.current = gl.getUniformLocation(prog, 'time');
     uniResRef.current = gl.getUniformLocation(prog, 'resolution');
     uniLightModeRef.current = gl.getUniformLocation(prog, 'u_light_mode');
+    uniMouseRef.current = gl.getUniformLocation(prog, 'u_mouse');
+
+    const handleMouseMove = (e: MouseEvent) => {
+      const rect = canvas.getBoundingClientRect();
+      targetMouseRef.current = {
+        x: e.clientX - rect.left,
+        y: (canvas.height / Math.max(1, Math.min(window.devicePixelRatio || 1, dprMax))) - (e.clientY - rect.top)
+      };
+    };
+    window.addEventListener('mousemove', handleMouseMove);
 
     // Clear color
     gl.clearColor(0, 0, 0, 1);
@@ -195,14 +213,21 @@ export function AetherHero({
     ro.observe(canvas);
     window.addEventListener('resize', onResize);
 
-    // RAF
     const loop = (now: number) => {
+      // Smooth interpolation
+      mouseRef.current.x += (targetMouseRef.current.x - mouseRef.current.x) * 0.05;
+      mouseRef.current.y += (targetMouseRef.current.y - mouseRef.current.y) * 0.05;
+
       gl.clear(gl.COLOR_BUFFER_BIT);
       gl.useProgram(prog);
       gl.bindBuffer(gl.ARRAY_BUFFER, buf);
       if (uniResRef.current) gl.uniform2f(uniResRef.current, canvas.width, canvas.height);
       if (uniTimeRef.current) gl.uniform1f(uniTimeRef.current, now * 1e-3);
       if (uniLightModeRef.current) gl.uniform1f(uniLightModeRef.current, lightMode ? 1.0 : 0.0);
+      if (uniMouseRef.current) {
+        const dpr = Math.max(1, Math.min(window.devicePixelRatio || 1, dprMax));
+        gl.uniform2f(uniMouseRef.current, mouseRef.current.x * dpr, mouseRef.current.y * dpr);
+      }
       gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
       rafRef.current = requestAnimationFrame(loop);
     };
@@ -212,6 +237,7 @@ export function AetherHero({
     return () => {
       ro.disconnect();
       window.removeEventListener('resize', onResize);
+      window.removeEventListener('mousemove', handleMouseMove);
       if (rafRef.current) cancelAnimationFrame(rafRef.current);
       if (bufRef.current) gl.deleteBuffer(bufRef.current);
       if (programRef.current) gl.deleteProgram(programRef.current);

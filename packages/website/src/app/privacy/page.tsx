@@ -10,13 +10,13 @@ export default function PrivacyPolicy() {
     <div className="max-w-4xl mx-auto py-24 px-6 md:px-12 prose prose-zinc dark:prose-invert">
       <h1>Privacy Policy</h1>
       <p><strong>Last Updated:</strong> June 2026 | <strong>Data Controller:</strong> KeyRote Systems</p>
-      
+
       <h2>1. Information We Collect</h2>
       <h3>1.1 You Provide</h3>
       <ul>
         <li>Account data (name, email, hashed password, profile)</li>
         <li>Communications (support tickets, feedback)</li>
-        <li>Payment data (billing address only — card data via Stripe)</li>
+        <li>Payment data (billing address only - card data via Stripe)</li>
       </ul>
 
       <h3>1.2 Automatically Collected</h3>
@@ -47,7 +47,7 @@ export default function PrivacyPolicy() {
 
       <h2>4. Your Rights</h2>
       <p><strong>GDPR (EU/UK):</strong> Access, Rectification, Erasure, Restriction, Portability, Object, Withdraw Consent.<br />
-      <strong>CCPA (California):</strong> Know, Delete, Opt-out of sale, Non-discrimination.</p>
+        <strong>CCPA (California):</strong> Know, Delete, Opt-out of sale, Non-discrimination.</p>
       <p>To exercise rights: email <a href="mailto:security@keyrote.dev">security@keyrote.dev</a></p>
 
       <h2>5. Security</h2>

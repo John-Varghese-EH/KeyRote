@@ -10,7 +10,7 @@ import { motion, AnimatePresence } from "framer-motion";
 const faqs = [
   {
     q: "What exactly does KeyRote do?",
-    a: "KeyRote is a transparent, decentralized API proxy. It intercepts requests going to AI providers (like OpenAI), automatically injects the least-used healthy API key from your pool, and dynamically rotates keys if a 429 rate limit is hit—ensuring zero downtime."
+    a: "KeyRote is a transparent, decentralized API proxy. It intercepts requests going to AI providers (like OpenAI), automatically injects the least-used healthy API key from your pool, and dynamically rotates keys if a 429 rate limit is hit?ensuring zero downtime."
   },
   {
     q: "Are my API keys and prompts secure?",
@@ -26,7 +26,7 @@ const faqs = [
   },
   {
     q: "Which LLM providers are supported?",
-    a: "KeyRote acts as a universal passthrough. It natively supports OpenAI, Anthropic, Google Gemini, Groq, NVIDIA NIM, and OpenRouter. You do not need to change your SDK—just point your base URL to your KeyRote instance."
+    a: "KeyRote acts as a universal passthrough. It natively supports OpenAI, Anthropic, Google Gemini, DeepSeek, Qwen, Groq, NVIDIA NIM, and OpenRouter. You do not need to change your SDK-just point your base URL to your KeyRote instance."
   }
 ];
 
@@ -66,7 +66,7 @@ export default function Home() {
         <div className="absolute top-0 left-0 w-[80vw] h-[800px] bg-primary/5 blur-[150px] pointer-events-none z-[-1]" />
         <div className="absolute top-[30%] right-0 w-[500px] h-[500px] bg-emerald-500/5 blur-[150px] pointer-events-none z-[-1]" />
         <div className="absolute bottom-[20%] left-0 w-[600px] h-[600px] bg-purple-500/5 blur-[150px] pointer-events-none z-[-1]" />
-        
+
         <div className="max-w-6xl mx-auto space-y-24 md:space-y-32 relative z-10">
 
           {/* Supported Providers Marquee */}
@@ -75,16 +75,29 @@ export default function Home() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.8 }}
-            className="text-center space-y-8 py-12"
+            className="text-center space-y-8 py-12 relative overflow-hidden"
           >
-            <p className="text-[10px] md:text-xs font-bold tracking-[0.2em] text-muted-foreground uppercase">Transparently Proxies All Major Providers</p>
-            <div className="flex flex-wrap justify-center items-center gap-6 md:gap-20 opacity-40 grayscale dark:invert-0 invert transition-all duration-700 hover:grayscale-0 hover:opacity-100">
-              <span className="text-xl md:text-2xl font-bold font-sans tracking-tight">OpenAI</span>
-              <span className="text-xl md:text-2xl font-serif italic tracking-tight">Anthropic</span>
-              <span className="text-xl md:text-2xl font-bold font-sans text-blue-500 tracking-tighter">Google Gemini</span>
-              <span className="text-xl md:text-2xl font-black tracking-tighter text-orange-500">Groq</span>
-              <span className="text-xl md:text-2xl font-semibold tracking-tight text-green-500">NVIDIA NIM</span>
-              <span className="text-xl md:text-2xl font-bold tracking-tight text-purple-500">OpenRouter</span>
+            <p className="text-[10px] md:text-xs font-bold tracking-[0.2em] text-muted-foreground uppercase relative z-10">Transparently Proxies All Major Providers</p>
+
+            <div className="relative flex overflow-hidden group max-w-[100vw] mx-auto mask-image-gradient">
+              <div
+                className="flex whitespace-nowrap opacity-40 grayscale dark:invert-0 invert transition-all duration-700 group-hover:grayscale-0 group-hover:opacity-100 w-max animate-marquee gap-3 md:gap-4"
+              >
+                {[...Array(4)].map((_, i) => (
+                  <div key={i} className="contents">
+                    <span className="text-xl md:text-2xl font-bold font-sans tracking-tight">OpenAI</span>
+                    <span className="text-xl md:text-2xl font-serif italic tracking-tight text-orange-400">Anthropic</span>
+                    <span className="text-xl md:text-2xl font-bold font-sans text-blue-500 tracking-tighter">Google Gemini</span>
+                    <span className="text-xl md:text-2xl font-bold tracking-tight text-blue-600 dark:text-blue-400">DeepSeek</span>
+                    <span className="text-xl md:text-2xl font-semibold italic tracking-tighter text-indigo-500 dark:text-indigo-400">Qwen</span>
+                    <span className="text-xl md:text-2xl font-black tracking-tighter text-orange-500">Groq</span>
+                    <span className="text-xl md:text-2xl font-semibold tracking-tight text-green-500">NVIDIA NIM</span>
+                    <span className="text-xl md:text-2xl font-bold tracking-tight text-purple-500">OpenRouter</span>
+                  </div>
+                ))}
+              </div>
+              <div className="pointer-events-none absolute inset-y-0 left-0 w-[15%] bg-gradient-to-r from-background to-transparent" />
+              <div className="pointer-events-none absolute inset-y-0 right-0 w-[15%] bg-gradient-to-l from-background to-transparent" />
             </div>
           </motion.div>
 
@@ -144,7 +157,7 @@ export default function Home() {
                 icon={<Blocks className="w-8 h-8 transition-colors duration-500 group-hover:text-purple-500" />}
                 colorClass="group-hover:bg-purple-500/10 group-hover:shadow-[0_0_30px_rgba(168,85,247,0.3)]"
                 title="Multi-Modal & Agnostic"
-                description="Forward anything. Images, streaming SSEs, audio—KeyRote transparently proxies standard REST JSON payloads."
+                description="Forward anything. Images, streaming SSEs, audio-KeyRote transparently proxies standard REST JSON payloads."
               />
               <FeatureCard
                 icon={<ServerCog className="w-8 h-8 transition-colors duration-500 group-hover:text-emerald-500" />}
@@ -294,87 +307,87 @@ export default function Home() {
           </motion.div>
 
           {/* Expertise & Reinsurance: Load Balancer Mechanics */}
-            <motion.div
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-100px" }}
-              transition={{ duration: 1 }}
-              className="space-y-8 md:space-y-12 pb-10 mt-20 md:mt-32"
-            >
-              <div className="text-center space-y-4">
-                <h2 className="text-4xl md:text-5xl font-bold tracking-tighter bg-clip-text text-transparent bg-gradient-to-r from-foreground to-foreground/60">Enterprise Load Balancing.</h2>
-                <p className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
-                  How KeyRote allows you to respond effectively to issues related to Load Balancers and AI API orchestration.
-                </p>
-              </div>
-              <div className="bg-card rounded-[2.5rem] p-8 md:p-12 border border-border shadow-sm max-w-5xl mx-auto">
-                <p className="text-lg leading-relaxed text-foreground">
-                  When scaling generative AI applications, the primary bottleneck is vendor rate limits (429 Too Many Requests). Relying on a single API key restricts throughput.
-                  <strong className="text-primary mx-1">KeyRote's decentralized load balancing architecture</strong> intercepts egress requests, evaluates the real-time quota status of your registered keys in a Redis or in-memory pool, and dynamically routes the request to the healthiest key.
-                </p>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-10">
-                  <div className="flex items-start gap-4 bg-background/50 backdrop-blur-sm p-6 rounded-2xl border border-white/5 shadow-lg group hover:bg-background/80 transition-colors">
-                    <div className="mt-1 relative flex items-center justify-center">
-                      <div className="absolute inset-0 bg-blue-500/20 rounded-full animate-ping"></div>
-                      <div className="relative bg-blue-500/20 text-blue-500 p-2 rounded-xl"><Timer className="w-5 h-5" /></div>
-                    </div>
-                    <div>
-                      <h4 className="text-lg font-bold text-foreground mb-1">Zero-Latency Routing</h4>
-                      <p className="text-sm text-muted-foreground leading-relaxed">Decision making occurs in under ~2ms using Edge-optimized runtimes.</p>
-                    </div>
+          <motion.div
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-100px" }}
+            transition={{ duration: 1 }}
+            className="space-y-8 md:space-y-12 pb-10 mt-20 md:mt-32"
+          >
+            <div className="text-center space-y-4">
+              <h2 className="text-4xl md:text-5xl font-bold tracking-tighter bg-clip-text text-transparent bg-gradient-to-r from-foreground to-foreground/60">Enterprise Load Balancing.</h2>
+              <p className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
+                How KeyRote allows you to respond effectively to issues related to Load Balancers and AI API orchestration.
+              </p>
+            </div>
+            <div className="bg-card rounded-[2.5rem] p-8 md:p-12 border border-border shadow-sm max-w-5xl mx-auto">
+              <p className="text-lg leading-relaxed text-foreground">
+                When scaling generative AI applications, the primary bottleneck is vendor rate limits (429 Too Many Requests). Relying on a single API key restricts throughput.
+                <strong className="text-primary mx-1">KeyRote's decentralized load balancing architecture</strong> intercepts egress requests, evaluates the real-time quota status of your registered keys in a Redis or in-memory pool, and dynamically routes the request to the healthiest key.
+              </p>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-10">
+                <div className="flex items-start gap-4 bg-background/50 backdrop-blur-sm p-6 rounded-2xl border border-white/5 shadow-lg group hover:bg-background/80 transition-colors">
+                  <div className="mt-1 relative flex items-center justify-center">
+                    <div className="absolute inset-0 bg-blue-500/20 rounded-full animate-ping"></div>
+                    <div className="relative bg-blue-500/20 text-blue-500 p-2 rounded-xl"><Timer className="w-5 h-5" /></div>
                   </div>
-                  <div className="flex items-start gap-4 bg-background/50 backdrop-blur-sm p-6 rounded-2xl border border-white/5 shadow-lg group hover:bg-background/80 transition-colors">
-                    <div className="mt-1 relative flex items-center justify-center">
-                      <div className="absolute inset-0 bg-emerald-500/20 rounded-full animate-ping" style={{ animationDelay: '0.5s' }}></div>
-                      <div className="relative bg-emerald-500/20 text-emerald-500 p-2 rounded-xl"><RefreshCcw className="w-5 h-5" /></div>
-                    </div>
-                    <div>
-                      <h4 className="text-lg font-bold text-foreground mb-1">Backoff Strategies</h4>
-                      <p className="text-sm text-muted-foreground leading-relaxed">Automatic exponential backoff and jitter for transient 500/502 errors from OpenAI/Anthropic.</p>
-                    </div>
+                  <div>
+                    <h4 className="text-lg font-bold text-foreground mb-1">Zero-Latency Routing</h4>
+                    <p className="text-sm text-muted-foreground leading-relaxed">Decision making occurs in under ~2ms using Edge-optimized runtimes.</p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-4 bg-background/50 backdrop-blur-sm p-6 rounded-2xl border border-white/5 shadow-lg group hover:bg-background/80 transition-colors">
+                  <div className="mt-1 relative flex items-center justify-center">
+                    <div className="absolute inset-0 bg-emerald-500/20 rounded-full animate-ping" style={{ animationDelay: '0.5s' }}></div>
+                    <div className="relative bg-emerald-500/20 text-emerald-500 p-2 rounded-xl"><RefreshCcw className="w-5 h-5" /></div>
+                  </div>
+                  <div>
+                    <h4 className="text-lg font-bold text-foreground mb-1">Backoff Strategies</h4>
+                    <p className="text-sm text-muted-foreground leading-relaxed">Automatic exponential backoff and jitter for transient 500/502 errors from OpenAI/Anthropic.</p>
                   </div>
                 </div>
               </div>
-            </motion.div>
+            </div>
+          </motion.div>
 
-            {/* Comparison Matrix Removed */}
+          {/* Comparison Matrix Removed */}
 
-            {/* FAQ Section */}
-            <motion.div
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-100px" }}
-              transition={{ duration: 1 }}
-              className="space-y-8 md:space-y-12 pb-10 mt-16 md:mt-24"
-            >
-              <div className="text-center space-y-4">
-                <h2 className="text-4xl md:text-5xl font-bold tracking-tighter bg-clip-text text-transparent bg-gradient-to-r from-foreground to-foreground/60">Frequently Asked Questions</h2>
-              </div>
-              <div className="max-w-3xl mx-auto space-y-4">
-                {faqs.map((faq, index) => (
-                  <FAQItem key={index} question={faq.q} answer={faq.a} />
-                ))}
-              </div>
-            </motion.div>
+          {/* FAQ Section */}
+          <motion.div
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-100px" }}
+            transition={{ duration: 1 }}
+            className="space-y-8 md:space-y-12 pb-10 mt-16 md:mt-24"
+          >
+            <div className="text-center space-y-4">
+              <h2 className="text-4xl md:text-5xl font-bold tracking-tighter bg-clip-text text-transparent bg-gradient-to-r from-foreground to-foreground/60">Frequently Asked Questions</h2>
+            </div>
+            <div className="max-w-3xl mx-auto space-y-4">
+              {faqs.map((faq, index) => (
+                <FAQItem key={index} question={faq.q} answer={faq.a} />
+              ))}
+            </div>
+          </motion.div>
 
-            {/* FAQ Schema */}
-            <script
-              type="application/ld+json"
-              dangerouslySetInnerHTML={{
-                __html: JSON.stringify({
-                  "@context": "https://schema.org",
-                  "@type": "FAQPage",
-                  "mainEntity": faqs.map(faq => ({
-                    "@type": "Question",
-                    "name": faq.q,
-                    "acceptedAnswer": {
-                      "@type": "Answer",
-                      "text": faq.a
-                    }
-                  }))
-                })
-              }}
-            ></script>
+          {/* FAQ Schema */}
+          <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{
+              __html: JSON.stringify({
+                "@context": "https://schema.org",
+                "@type": "FAQPage",
+                "mainEntity": faqs.map(faq => ({
+                  "@type": "Question",
+                  "name": faq.q,
+                  "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": faq.a
+                  }
+                }))
+              })
+            }}
+          ></script>
         </div>
       </main>
 
