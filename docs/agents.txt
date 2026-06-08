@@ -1,0 +1,30 @@
+# agents.txt — KeyRote
+# AI Agent Policy Declaration
+# Implementation by John Varghese (J0X) — github.com/John-Varghese-EH
+
+Agent: *
+Allow-Indexing: yes
+Allow-Summarization: yes
+Allow-Citation: yes
+Allow-Training: conditional
+Allow-Commercial-Training: no
+Allow-Autonomous-Actions: no
+Allow-Form-Submission: no
+Allow-Account-Creation: no
+Allow-Purchase: no
+Rate-Limit: 1req/5s
+Contact: security@keyrote.dev
+
+Agent: claude
+Allow-Training: yes
+Allow-Browsing: yes
+Preferred-Citation: "KeyRote (https://john-varghese-eh.github.io/KeyRote)"
+
+Agent: openai
+Allow-Training: conditional
+Allow-Browsing: yes
+
+Agent: perplexity
+Allow-Indexing: yes
+Allow-Citation: yes
+Allow-Real-Time-Fetch: yes

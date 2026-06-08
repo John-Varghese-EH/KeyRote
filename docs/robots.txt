@@ -1,0 +1,19 @@
+User-Agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /api/
+Disallow: /_next/
+
+User-Agent: GPTBot
+User-Agent: ClaudeBot
+User-Agent: anthropic-ai
+User-Agent: Google-Extended
+User-Agent: PerplexityBot
+Allow: /docs
+Allow: /llms.txt
+Allow: /llms-full.txt
+Disallow: /admin/
+Disallow: /api/
+
+Host: https://john-varghese-eh.github.io/KeyRote
+Sitemap: https://john-varghese-eh.github.io/KeyRote/sitemap.xml

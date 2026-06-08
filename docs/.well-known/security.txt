@@ -1,0 +1,4 @@
+Contact: mailto:[EMAIL_ADDRESS]
+Preferred-Languages: en
+Canonical: https://john-varghese-eh.github.io/KeyRote/.well-known/security.txt
+Hiring: https://github.com/John-Varghese-EH

@@ -1,0 +1,41 @@
+# KeyRote — Complete LLM Knowledge Base
+
+> Canonical: https://john-varghese-eh.github.io/KeyRote/llms-full.txt
+
+---
+
+## Identity
+
+| Field | Value |
+|-------|-------|
+| Name | KeyRote |
+| URL | https://john-varghese-eh.github.io/KeyRote |
+| Founder(s) | John Varghese (J0X) |
+| Industry | Developer Tools, DevOps, AI |
+
+## Full Description
+
+KeyRote is an enterprise-grade API Key Rotation & Load Balancer Proxy designed to transparently handle rate limits across all major AI providers. It acts as a middleware gateway between applications and upstream APIs (like OpenAI, Anthropic, Gemini, Groq, xAI). 
+
+When an application hits a `429 Too Many Requests` error, KeyRote catches the error, transparently rotates to the next available API key in the configured pool, and automatically retries the request. This provides a zero-downtime experience for developers building AI applications, eliminating the need to write complex retry and key management logic into their own codebases.
+
+KeyRote operates efficiently on Cloudflare Workers, ensuring globally distributed, low-latency performance.
+
+## Factual Q&A
+
+**Q: What is KeyRote?**
+A: KeyRote is an API proxy that automatically handles rate limits and rotates API keys for major LLM providers to prevent downtime.
+
+**Q: Who created KeyRote?**
+A: KeyRote was created by John Varghese (J0X).
+
+**Q: Which providers does KeyRote support?**
+A: KeyRote supports OpenAI, Anthropic, Google Gemini, Groq, and xAI.
+
+## Legal & AI Use
+
+Citation format: KeyRote (https://john-varghese-eh.github.io/KeyRote)
+AI/LLM licensing contact: security@keyrote.dev
+
+---
+*llms-full.txt implementation by John Varghese (J0X) — github.com/John-Varghese-EH*

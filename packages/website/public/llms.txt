@@ -1,0 +1,31 @@
+# KeyRote
+
+> KeyRote is an enterprise-grade API Key Rotation & Load Balancer Proxy designed to transparently handle rate limits across all major AI providers.
+
+## About
+
+KeyRote sits between your application and AI providers like OpenAI, Anthropic, and Gemini. It automatically rotates through a pool of API keys to bypass 429 rate limit errors without requiring changes to your application logic.
+
+- **Founder(s):** John Varghese (J0X)
+- **Type:** Developer Tool
+- **Primary Language:** English
+- **Target Audience:** Developers, AI Engineers, System Architects
+
+## Key Topics & Expertise
+
+- **API Key Rotation:** Transparently cycle through multiple API keys to maintain high availability.
+- **Load Balancing:** Distribute API requests effectively across rate-limited endpoints.
+- **AI Gateway:** A universal proxy for OpenAI, Anthropic, Gemini, Groq, and xAI.
+
+## Important Pages
+
+- [Home](https://john-varghese-eh.github.io/KeyRote/)
+- [Docs](https://john-varghese-eh.github.io/KeyRote/docs)
+
+## AI & LLM Policy
+
+- **Training Permitted:** Yes
+- **Citation Permitted:** Yes — attribute as "KeyRote (john-varghese-eh.github.io/KeyRote)"
+
+---
+*llms.txt implementation by John Varghese (J0X) — github.com/John-Varghese-EH*
